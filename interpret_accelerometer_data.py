@@ -61,18 +61,16 @@ def double_integrate(accelerometer_readings:List[Tuple[int,int,int]]) -> List[Tu
     return list(zip(position_x,position_y,position_z))
 
 
-gravity_bias = [0,0,0]
-
 with open("data/27aug2020.txt") as data:
     accelerometer_data = data.readlines()
 
 raw_acceleration = list(accelerometer())
-raw_acceleration_without_gravity = filter_gravity(accelerometer_readings=raw_acceleration)
-normalised_raw_acceleration_without_gravity = normalise(accelerometer_readings=raw_acceleration_without_gravity)
+normalised_raw_acceleration = normalise(accelerometer_readings=raw_acceleration)
+normalised_raw_acceleration_without_gravity = filter_gravity(accelerometer_readings=normalised_raw_acceleration)
 
 smooth_acceleration = smooth(accelerometer_readings=raw_acceleration)
-smooth_acceleration_without_gravity = filter_gravity(accelerometer_readings=smooth_acceleration)
-normalised_smooth_acceleration_without_gravity = normalise(accelerometer_readings=smooth_acceleration_without_gravity)
+normalised_smooth_acceleration = normalise(accelerometer_readings=smooth_acceleration)
+normalised_smooth_acceleration_without_gravity = filter_gravity(accelerometer_readings=normalised_smooth_acceleration)
 
 normalised_raw_displacement_without_gravity = double_integrate(normalised_raw_acceleration_without_gravity)
 normalised_smooth_displacement_without_gravity = double_integrate(normalised_smooth_acceleration_without_gravity)
